@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>용산 하루 — amazingalex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet"/>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=694fefef27710378fe1efb37fac3e1b3"></script>
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --text: #2a2620;
+      --muted: #8a7f74;
+      --accent: #c4956a;
+      --card: #ffffff;
+      --line: #e2dbd2;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 80px 40px 40px;
+      max-width: 720px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    .label {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 300;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 32px 0;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.2s ease forwards;
+    }
+
+    /* ── QUOTE ── */
+    .quote-block {
+      max-width: 720px;
+      margin: 0 auto 60px;
+      padding: 0 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.3s ease forwards;
+    }
+
+    .quote-block blockquote {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: var(--muted);
+      line-height: 1.9;
+      border-left: 2px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    .quote-block .song-credit {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      padding-left: 22px;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 40px 100px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 60px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .stop {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .stop.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stop-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 40px;
+      padding-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stop-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1.5px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .stop-time {
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      writing-mode: vertical-lr;
+      text-orientation: mixed;
+    }
+
+    .stop-card {
+      flex: 1;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+      border: 1px solid var(--line);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .stop-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    }
+
+    .stop-name {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .stop-tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      background: #fdf3e9;
+      border-radius: 20px;
+      padding: 2px 10px;
+      margin-bottom: 10px;
+    }
+
+    .stop-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    /* ── ENDING ── */
+    .ending {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 40px 120px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s ease forwards;
+    }
+
+    .ending p {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    .ending .signature {
+      margin-top: 32px;
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-size: 11px;
+      color: var(--line);
+      letter-spacing: 0.1em;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MAP ── */
+    .map-section {
+      max-width: 720px;
+      margin: 0 auto 60px;
+      padding: 0 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s ease forwards;
+    }
+
+    .map-label {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    #kakaomap {
+      width: 100%;
+      height: 380px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+
+    .map-caption {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 520px) {
+      header, .quote-block, .timeline, .ending { padding-left: 20px; padding-right: 20px; }
+      .timeline::before { left: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="label">amazingalex · 2026년 6월</div>
+  <h1>용산 하루</h1>
+  <div class="subtitle">거리가 멀어서 우리는 늘 용산에서 만난다.<br>딱 중간이니까.</div>
+</header>
+
+<div class="divider" style="margin-left: 40px; max-width: 720px; margin-left: calc(50% - 320px);"></div>
+
+<div class="quote-block">
+  <blockquote>
+    "Ride tonight with just sound<br>
+    Up too high to come down<br>
+    We'll stay connected<br>
+    'Til it all comes back around"
+  </blockquote>
+  <div class="song-credit">— Just Sound, State Champs</div>
+</div>
+
+<!-- 카카오맵 -->
+<div class="map-section">
+  <div class="map-label">그날의 코스</div>
+  <div id="kakaomap"></div>
+  <div class="map-caption">한땀스시 → 전자랜드 → 스타벅스 → 잭슨피자 → 이촌한강공원</div>
+</div>
+
+<div class="timeline">
+
+  <div class="stop">
+    <div class="stop-left">
+      <div class="stop-num">1</div>
+      <div class="stop-time">1:00 PM</div>
+    </div>
+    <div class="stop-card">
+      <div class="stop-name">한땀스시</div>
+      <span class="stop-tag">🍣 점심</span>
+      <p class="stop-desc">용산에 올 때마다 오는 단골 초밥집. 오랜만에 먹는 초밥이라 그런지 더 맛있었다. 밥보다 이야기가 더 많았던 것 같기도 하지만.</p>
+    </div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-left">
+      <div class="stop-num">2</div>
+      <div class="stop-time">2:30 PM</div>
+    </div>
+    <div class="stop-card">
+      <div class="stop-name">용산전자랜드 신관</div>
+      <span class="stop-tag">🛒 구경</span>
+      <p class="stop-desc">1층 창고형 약국부터 키보드 파는 곳, 가챠까지. 눈이 바빠지는 곳. 딱히 살 게 없어도 기웃거리게 된다.</p>
+    </div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-left">
+      <div class="stop-num">3</div>
+      <div class="stop-time">3:30 PM</div>
+    </div>
+    <div class="stop-card">
+      <div class="stop-name">스타벅스 용산 ET랜드점</div>
+      <span class="stop-tag">☕ 카페</span>
+      <p class="stop-desc">과제하다가 닌텐도 꺼냈다. 신기능을 발견해서 변칙 플레이를 시도했는데 반응속도에서 졌다. ㅋㅋㅋ</p>
+    </div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-left">
+      <div class="stop-num">4</div>
+      <div class="stop-time">5:30 PM</div>
+    </div>
+    <div class="stop-card">
+      <div class="stop-name">잭슨피자 이촌점</div>
+      <span class="stop-tag">🍕 저녁</span>
+      <p class="stop-desc">피자 사이즈가 너무 작았다. 둘 다 잠깐 말이 없었다. 결국 라면도 시켰다.</p>
+    </div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-left">
+      <div class="stop-num">5</div>
+      <div class="stop-time">6:30 PM</div>
+    </div>
+    <div class="stop-card">
+      <div class="stop-name">이촌한강공원</div>
+      <span class="stop-tag">🌇 산책</span>
+      <p class="stop-desc">소화도 시킬 겸 한 바퀴. 3월보다 사람도 많고 벌레도 많았다. 그래도 강은 늘 좋다.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="ending">
+  <p>
+    집에 오는 길에 이어폰을 꽂았다.<br><br>
+    잠을 못 잔 탓인지 텐션이 좀 낮았던 것 같다.<br>
+    재미있었을까, 그 친구는.<br><br>
+    분명 이제는 그런 걱정 안 해도 될 사이인데.<br>
+    그래도 아끼는 사람 앞에서는 여전히 조심스럽다.
+  </p>
+  <div class="signature">amazingalex</div>
+</div>
+
+<footer>amazingalex · blog.naver.com/amazingalex</footer>
+
+<script>
+  // 스크롤 애니메이션
+  const stops = document.querySelectorAll('.stop');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  stops.forEach(stop => observer.observe(stop));
+
+  // 카카오맵
+  const container = document.getElementById('kakaomap');
+  const options = {
+    center: new kakao.maps.LatLng(37.5255, 126.9660),
+    level: 5
+  };
+  const map = new kakao.maps.Map(container, options);
+
+  const places = [
+    { lat: 37.5274286, lng: 126.9655975, name: '① 한땀스시', desc: '단골 초밥집' },
+    { lat: 37.5333623, lng: 126.9589872, name: '② 용산전자랜드 신관', desc: '구경' },
+    { lat: 37.5327611, lng: 126.9610377, name: '③ 스타벅스 ET랜드점', desc: '카페 + 닌텐도' },
+    { lat: 37.5238985, lng: 126.9712670, name: '④ 잭슨피자 이촌점', desc: '피자가 너무 작았다' },
+    { lat: 37.5169202, lng: 126.9717022, name: '⑤ 이촌한강공원', desc: '마지막 산책' },
+  ];
+
+  const linePath = places.map(p => new kakao.maps.LatLng(p.lat, p.lng));
+
+  // 경로선
+  const polyline = new kakao.maps.Polyline({
+    path: linePath,
+    strokeWeight: 2.5,
+    strokeColor: '#c4956a',
+    strokeOpacity: 0.85,
+    strokeStyle: 'solid'
+  });
+  polyline.setMap(map);
+
+  // 마커 + 인포윈도우
+  places.forEach((place, i) => {
+    const markerImg = new kakao.maps.MarkerImage(
+      'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+      new kakao.maps.Size(24, 35)
+    );
+
+    const marker = new kakao.maps.Marker({
+      position: new kakao.maps.LatLng(place.lat, place.lng),
+      map: map,
+      title: place.name
+    });
+
+    const infowindow = new kakao.maps.InfoWindow({
+      content: `<div style="padding:8px 12px;font-family:'Noto Sans KR',sans-serif;font-size:12px;color:#2a2620;min-width:120px;line-height:1.6;">
+        <strong style="color:#c4956a;">${place.name}</strong><br>
+        <span style="color:#8a7f74;">${place.desc}</span>
+      </div>`
+    });
+
+    kakao.maps.event.addListener(marker, 'mouseover', () => infowindow.open(map, marker));
+    kakao.maps.event.addListener(marker, 'mouseout', () => infowindow.close());
+  });
+</script>
+
+</body>
+</html>
