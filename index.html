@@ -7,15 +7,18 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #f7f4ef; }
-    #kakaomap { width: 100%; height: 500px; }
+
+    #kakaomap { width: 100%; height: 460px; }
+
     .course {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 6px;
-      padding: 16px 20px;
+      padding: 14px 20px;
       background: #fff;
       border-top: 1px solid #e2dbd2;
+      border-bottom: 1px solid #e2dbd2;
     }
     .course-item span {
       background: #fdf3e9;
@@ -25,6 +28,85 @@
       font-size: 11px;
     }
     .arrow { color: #c4956a; font-size: 10px; display: flex; align-items: center; }
+
+    .place-list {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .place-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e2dbd2;
+      overflow: hidden;
+    }
+
+    .place-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .place-body {
+      padding: 16px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .place-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #fdf3e9;
+      color: #c4956a;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+
+    .place-info { flex: 1; }
+
+    .place-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2a2620;
+      margin-bottom: 4px;
+    }
+
+    .place-address {
+      font-size: 12px;
+      color: #8a7f74;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .place-time {
+      display: inline-block;
+      font-size: 11px;
+      color: #c4956a;
+      background: #fdf3e9;
+      border-radius: 20px;
+      padding: 2px 10px;
+      margin-bottom: 8px;
+    }
+
+    .place-comment {
+      font-size: 13px;
+      color: #5a5148;
+      line-height: 1.8;
+      border-left: 2px solid #e2dbd2;
+      padding-left: 12px;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
@@ -41,6 +123,75 @@
   <div class="course-item"><span>④ 잭슨피자</span></div>
   <div class="arrow">→</div>
   <div class="course-item"><span>⑤ 이촌한강공원</span></div>
+</div>
+
+<div class="place-list">
+
+  <div class="place-card">
+    <img class="place-img" src="sushi.png" alt="한땀스시"/>
+    <div class="place-body">
+      <div class="place-num">①</div>
+      <div class="place-info">
+        <div class="place-name">한땀스시</div>
+        <div class="place-address">서울 용산구 한강대로 108 2층</div>
+        <span class="place-time">🕐 오후 1:00 — 점심</span>
+        <div class="place-comment">용산 로컬 맛집. 신선한 재료의 한 땀 한 땀 정성스러운 초밥.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="place-card">
+    <img class="place-img" src="electronics.png" alt="용산전자랜드"/>
+    <div class="place-body">
+      <div class="place-num">②</div>
+      <div class="place-info">
+        <div class="place-name">용산전자랜드 신관</div>
+        <div class="place-address">서울 용산구 청파로 74</div>
+        <span class="place-time">🕑 오후 2:30 — 구경</span>
+        <div class="place-comment">전자기기부터 가챠, 창고형 약국까지. 구경만 해도 한 시간이 훌쩍.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="place-card">
+    <img class="place-img" src="cafe.png" alt="스타벅스"/>
+    <div class="place-body">
+      <div class="place-num">③</div>
+      <div class="place-info">
+        <div class="place-name">스타벅스 용산 ET랜드점</div>
+        <div class="place-address">서울 용산구 청파로 74 전자랜드 1층</div>
+        <span class="place-time">🕞 오후 3:30 — 카페 + 닌텐도</span>
+        <div class="place-comment">전자랜드 바로 옆. 지하철 이동 전 잠깐 쉬어가기 좋은 곳.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="place-card">
+    <img class="place-img" src="pizza.png" alt="잭슨피자"/>
+    <div class="place-body">
+      <div class="place-num">④</div>
+      <div class="place-info">
+        <div class="place-name">잭슨피자 이촌점</div>
+        <div class="place-address">서울 용산구 이촌로 224</div>
+        <span class="place-time">🕔 오후 5:30 — 저녁</span>
+        <div class="place-comment">이촌동 주민 맛집. 뉴욕 스타일 피자를 한강 근처에서.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="place-card">
+    <img class="place-img" src="hangang.png" alt="이촌한강공원"/>
+    <div class="place-body">
+      <div class="place-num">⑤</div>
+      <div class="place-info">
+        <div class="place-name">이촌한강공원</div>
+        <div class="place-address">서울 용산구 이촌로 72길 62</div>
+        <span class="place-time">🌇 오후 6:30 — 산책</span>
+        <div class="place-comment">한강 뷰가 탁 트이는 공원. 저녁 산책 코스로 딱.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -84,12 +235,9 @@
     });
   }
 
-  // document.write 대신 동적으로 스크립트 삽입
   const script = document.createElement('script');
   script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=694fefef27710378fe1efb37fac3e1b3&autoload=false';
-  script.onload = () => {
-    kakao.maps.load(initMap);
-  };
+  script.onload = () => { kakao.maps.load(initMap); };
   document.head.appendChild(script);
 </script>
 
