@@ -12,15 +12,15 @@
 
     .course {
       max-width: 640px;
-      margin: 0 auto;
+      margin: 16px auto 0;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 6px;
       padding: 14px 20px;
       background: #fff;
-      border-top: 1px solid #e2dbd2;
-      border-bottom: 1px solid #e2dbd2;
+      border-radius: 12px;
+      border: 1px solid #e2dbd2;
     }
     .course-item span {
       background: #fdf3e9;
@@ -41,6 +41,10 @@
     .map-wrap {
       max-width: 640px;
       margin: 24px auto 0;
+      padding: 0 20px;
+    }
+
+    .course-wrap {
       padding: 0 20px;
     }
 
@@ -69,8 +73,7 @@
 
     .place-img {
       width: 100%;
-      height: 180px;
-      object-fit: cover;
+      height: auto;
       display: block;
     }
 
@@ -136,16 +139,18 @@
 <div class="page-header"><h1>성현의 용산 하루 코스</h1></div>
 <div class="map-wrap"><div id="kakaomap"></div></div>
 
-<div class="course">
-  <div class="course-item"><span>① 한땀스시</span></div>
-  <div class="arrow">→</div>
-  <div class="course-item"><span>② 용산전자랜드</span></div>
-  <div class="arrow">→</div>
-  <div class="course-item"><span>③ 스타벅스</span></div>
-  <div class="arrow">→</div>
-  <div class="course-item"><span>④ 잭슨피자</span></div>
-  <div class="arrow">→</div>
-  <div class="course-item"><span>⑤ 이촌한강공원</span></div>
+<div class="course-wrap">
+  <div class="course">
+    <div class="course-item"><span>① 한땀스시</span></div>
+    <div class="arrow">→</div>
+    <div class="course-item"><span>② 용산전자랜드</span></div>
+    <div class="arrow">→</div>
+    <div class="course-item"><span>③ 스타벅스</span></div>
+    <div class="arrow">→</div>
+    <div class="course-item"><span>④ 잭슨피자</span></div>
+    <div class="arrow">→</div>
+    <div class="course-item"><span>⑤ 이촌한강공원</span></div>
+  </div>
 </div>
 
 <div class="place-list">
